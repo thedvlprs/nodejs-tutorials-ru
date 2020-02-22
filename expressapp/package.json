@@ -1,0 +1,22 @@
+{
+  "name": "expressapp",
+  "version": "1.0.0",
+  "description": "Getting started w/Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teksavyy/nodejs-tutorials-ru.git"
+  },
+  "author": "Sophia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/teksavyy/nodejs-tutorials-ru/issues"
+  },
+  "homepage": "https://github.com/teksavyy/nodejs-tutorials-ru#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
