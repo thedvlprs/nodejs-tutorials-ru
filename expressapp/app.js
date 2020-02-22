@@ -104,6 +104,7 @@ app.use('/', function(req, res) {
 app.listen(3000, () => {
   console.log(`Server started on 3000 🔥`);
 });
+
 /* 
 Теперь чтобы обратиться к файлу about.html, необходимо отправить запрос http://localhost:3000/static/about.html
 */
