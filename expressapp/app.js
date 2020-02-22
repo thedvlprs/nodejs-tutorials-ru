@@ -64,11 +64,26 @@
 //   console.log(`Server started on 3000 🔥`);
 // });
 
+// const express = require('express');
+// const app = express();
+
+// app.use(function(req, res) {
+//   res.sendFile(__dirname + '/index.html');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+// TODO: Static Files
 const express = require('express');
+
 const app = express();
 
-app.use(function(req, res) {
-  res.sendFile(__dirname + '/index.html');
+app.use(express.static(__dirname + '/public'));
+
+app.use('/', function(req, res) {
+  res.send('<h1>Home Page</h1>');
 });
 
 app.listen(3000, () => {
