@@ -21,24 +21,56 @@
 //   console.log(`Server started on 3000 🔥`);
 // });
 
-const express = require('express');
+// const express = require('express');
 
+// const app = express();
+
+// app.use(function(req, res, next) {
+//   console.log('Middleware 1');
+//   next();
+// });
+
+// app.use(function(req, res, next) {
+//   console.log('Middleware 2');
+//   next();
+// });
+
+// app.get('/', function(req, res) {
+//   console.log('Route /');
+//   res.send('Hello');
+// });
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+// const express = require('express');
+// const app = express();
+
+// app.use(function(request, response) {
+//   response.send(`<!DOCTYPE html>
+//   <html>
+//   <head>
+//       <title>Главная</title>
+//       <meta charset="utf-8" />
+//   </head>
+//   <body>
+//       <h1>Главная страница</h1>
+//       <h3>Привет, Express</h3>
+//   </body>
+//   <html>`);
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+const express = require('express');
 const app = express();
 
-app.use(function(req, res, next) {
-  console.log('Middleware 1');
-  next();
+app.use(function(req, res) {
+  res.sendFile(__dirname + '/index.html');
 });
 
-app.use(function(req, res, next) {
-  console.log('Middleware 2');
-  next();
-});
-
-app.get('/', function(req, res) {
-  console.log('Route /');
-  res.send('Hello');
-});
 app.listen(3000, () => {
   console.log(`Server started on 3000 🔥`);
 });
