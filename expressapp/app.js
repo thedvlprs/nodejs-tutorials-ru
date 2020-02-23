@@ -91,20 +91,40 @@
 // });
 
 // Дополнительно изменяем путь к каталогу статических файлов:
-const express = require('express');
+// const express = require('express');
 
-const app = express();
+// const app = express();
 
-app.use('/static', express.static(__dirname + '/public'));
+// app.use('/static', express.static(__dirname + '/public'));
 
-app.use('/', function(req, res) {
-  res.send('<h1>Home Page</h1>');
-});
+// app.use('/', function(req, res) {
+//   res.send('<h1>Home Page</h1>');
+// });
 
-app.listen(3000, () => {
-  console.log(`Server started on 3000 🔥`);
-});
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
 
 /* 
 Теперь чтобы обратиться к файлу about.html, необходимо отправить запрос http://localhost:3000/static/about.html
 */
+
+// TODO: Маршрутизация
+const express = require('express');
+const app = express();
+
+// обработка запроса по адресу /about
+app.get('/about', function(request, response) {
+  response.send('<h1>О сайте</h1>');
+});
+
+// обработка запроса по адресу /contact
+app.use('/contact', function(request, response) {
+  response.send('<h1>Контакты</h1>');
+});
+
+// обработка запроса к корню веб-сайта
+app.get('/', function(request, response) {
+  response.send('<h1>Главная страница</h1>');
+});
+app.listen(3000);

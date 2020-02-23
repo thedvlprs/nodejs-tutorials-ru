@@ -374,18 +374,18 @@ fs.unlink("hello.txt", (err) => {
 //   });
 
 // TODO: Шаблоны
-const http = require('http');
-const fs = require('fs');
+// const http = require('http');
+// const fs = require('fs');
 
-http
-  .createServer(function(req, res) {
-    fs.readFile('index.html', 'utf8', function(err, data) {
-      let message = 'Изучаем Node.js';
-      let header = 'Главная страница';
-      data = data.replace('{header}', header).replace('{message}', message);
-      res.end(data);
-    });
-  })
-  .listen(3000, function() {
-    console.log('Server listening on port 3000 🔥');
-  });
+// http
+//   .createServer(function(req, res) {
+//     fs.readFile('index.html', 'utf8', function(err, data) {
+//       let message = 'Изучаем Node.js';
+//       let header = 'Главная страница';
+//       data = data.replace('{header}', header).replace('{message}', message);
+//       res.end(data);
+//     });
+//   })
+//   .listen(3000, function() {
+//     console.log('Server listening on port 3000 🔥');
+//   });
