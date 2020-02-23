@@ -110,21 +110,48 @@
 */
 
 // TODO: Маршрутизация
+// const express = require('express');
+// const app = express();
+
+// // обработка запроса по адресу /about
+// app.get('/about', function(request, response) {
+//   response.send('<h1>О сайте</h1>');
+// });
+
+// // обработка запроса по адресу /contact
+// app.use('/contact', function(request, response) {
+//   response.send('<h1>Контакты</h1>');
+// });
+
+// // обработка запроса к корню веб-сайта
+// app.get('/', function(request, response) {
+//   response.send('<h1>Главная страница</h1>');
+// });
+// app.listen(3000);
+
+// TODO: Переадресация
+// const express = require('express');
+// const app = express();
+
+// app.use('/index', function(req, res) {
+//   res.redirect('https://github.com/teksavyy/nodejs-tutorials-ru');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
 const express = require('express');
 const app = express();
 
-// обработка запроса по адресу /about
-app.get('/about', function(request, response) {
-  response.send('<h1>О сайте</h1>');
+app.use('/home', function(req, res) {
+  res.redirect('about');
 });
 
-// обработка запроса по адресу /contact
-app.use('/contact', function(request, response) {
-  response.send('<h1>Контакты</h1>');
+app.use('/about', function(req, res) {
+  res.send('<h1>About</h1>');
 });
 
-// обработка запроса к корню веб-сайта
-app.get('/', function(request, response) {
-  response.send('<h1>Главная страница</h1>');
+app.listen(3000, () => {
+  console.log(`Server started on 3000 🔥`);
 });
-app.listen(3000);
