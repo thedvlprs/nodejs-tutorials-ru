@@ -141,21 +141,86 @@
 //   console.log(`Server started on 3000 🔥`);
 // });
 
+// const express = require('express');
+// const app = express();
+
+// app.use('/home', function(req, res) {
+//   res.redirect('about');
+// });
+
+// app.use('/about', function(req, res) {
+//   res.send('<h1>About</h1>');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+/*
+По умолчанию при редиректе передается статусный код 302, который указывает, что ресурс временно доступен по новому адресу. Но мы можем указать статусный код 301, чтобы сделать переадресацию постоянной:
+response.redirect(301, "/about");
+*/
+
+// TODO: Передача данных приложению. Параметры строки запроса (query)
+// В express мы можем получить параметра строки запроса через свойство query объекта request, который передается в функцию обработки запроса. Например:
+
+// const express = require('express');
+
+// const app = express();
+
+// app.get('/', function(req, res) {
+//   res.send('<h1>Home Page</h1>>');
+// });
+
+// app.use('/about', function(req, res) {
+//   let id = req.query.id;
+//   let userName = req.query.name;
+//   res.send(
+//     '<h1>Информация</h1><p>id=' + id + '</p><p>name=' + userName + '</p>'
+//   );
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+// Передача массивов
+// Подобным образом мы можем передавать массивы данных:
+// const express = require('express');
+
+// const app = express();
+
+// app.get('/', (req, res) => {
+//   res.send('<h1>Home Page</h1>');
+// });
+
+// app.use('/about', (req, res) => {
+//   console.log(req.query);
+//   let names = req.query.name;
+//   let resText = '<ul>';
+//   for (let i = 0; i < names.length; i++) {
+//     resText += '<li>' + names[i] + '</li>';
+//   }
+//   resText += '</ul>';
+//   res.send(resText);
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+// Передача сложных объектов
 const express = require('express');
+
 const app = express();
 
-app.use('/home', function(req, res) {
-  res.redirect('about');
-});
-
-app.use('/about', function(req, res) {
-  res.send('<h1>About</h1>');
+app.use('/about', (req, res) => {
+  console.log(req.query);
+  let id = req.query.user.id;
+  let name = req.query.user.name;
+  res.send('<h3>id:' + id + '<br>name:' + name + '</h3>');
 });
 
 app.listen(3000, () => {
   console.log(`Server started on 3000 🔥`);
 });
-/*
-По умолчанию при редиректе передается статусный код 302, который указывает, что ресурс временно доступен по новому адресу. Но мы можем указать статусный код 301, чтобы сделать переадресацию постоянной:
-response.redirect(301, "/about");
-*/
+// При передаче в строке запроса свойства объекта помещаются в квадратные скобки: user[id].
