@@ -209,18 +209,45 @@ response.redirect(301, "/about");
 // });
 
 // Передача сложных объектов
+// const express = require('express');
+
+// const app = express();
+
+// app.use('/about', (req, res) => {
+//   console.log(req.query);
+//   let id = req.query.user.id;
+//   let name = req.query.user.name;
+//   res.send('<h3>id:' + id + '<br>name:' + name + '</h3>');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+// При передаче в строке запроса свойства объекта помещаются в квадратные скобки: user[id].
+
+// TODO: POST-запросы и отправка форм
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use('/about', (req, res) => {
-  console.log(req.query);
-  let id = req.query.user.id;
-  let name = req.query.user.name;
-  res.send('<h3>id:' + id + '<br>name:' + name + '</h3>');
+// создаем парсер для данных application/x-www-form-urlencoded
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+app.get('/register', urlencodedParser, function(req, res) {
+  res.sendFile(__dirname + '/register.html');
+});
+
+app.post('/register', urlencodedParser, function(req, res) {
+  if (!req.body) return res.sendStatus(400);
+  console.log(req.body);
+  res.send(`${req.body.userName} - ${req.body.userAge}`);
+});
+
+app.get('/', function(req, res) {
+  res.send('Главная страница');
 });
 
 app.listen(3000, () => {
   console.log(`Server started on 3000 🔥`);
 });
-// При передаче в строке запроса свойства объекта помещаются в квадратные скобки: user[id].
