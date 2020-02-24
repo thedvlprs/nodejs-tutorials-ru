@@ -226,28 +226,72 @@ response.redirect(301, "/about");
 // При передаче в строке запроса свойства объекта помещаются в квадратные скобки: user[id].
 
 // TODO: POST-запросы и отправка форм
-const express = require('express');
-const bodyParser = require('body-parser');
+// const express = require('express');
+// const bodyParser = require('body-parser');
 
+// const app = express();
+
+// // создаем парсер для данных application/x-www-form-urlencoded
+// const urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+// app.get('/register', urlencodedParser, function(req, res) {
+//   res.sendFile(__dirname + '/register.html');
+// });
+
+// app.post('/register', urlencodedParser, function(req, res) {
+//   if (!req.body) return res.sendStatus(400);
+//   console.log(req.body);
+//   res.send(`${req.body.userName} - ${req.body.userAge}`);
+// });
+
+// app.get('/', function(req, res) {
+//   res.send('Главная страница');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+// TODO: Параметры маршрута
+/*
+Параметры маршрута представляют именованные сегменты URL-адреса. Не стоит их путать с параметрами строки запроса. Например:
+localhost:3000/about/user?id=3&name=Tom
+
+Здесь параметры строки запроса - это то, что идет после вопросительного знака - id=3&name=Tome. Остальная часть, которая идет до вопросительного знака может содержать параметры маршрута.
+
+Название параметра должно включать символы из диапазона [A-Za-z0-9_]. В определении маршрута параметры предваряются знаком двоеточия:
+*/
+// const express = require('express');
+// const app = express();
+
+// app.get('/products/:productId', function(req, res) {
+//   res.send('productId: ' + req.params['productId']);
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+/*
+В данном случае параметр называется "productId". Через коллекцию request.params можно получить все параметры и, в частности, значение параметра productId.
+
+Если нам потребуется передать для этого параметра значение, то оно указывается в качестве последнего сегмента в строке запроса:
+localhost:3000/products/8
+*/
+
+// Мы можем использовать более сложные комбинации параметров:
+const express = require('express');
 const app = express();
 
-// создаем парсер для данных application/x-www-form-urlencoded
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-app.get('/register', urlencodedParser, function(req, res) {
-  res.sendFile(__dirname + '/register.html');
-});
-
-app.post('/register', urlencodedParser, function(req, res) {
-  if (!req.body) return res.sendStatus(400);
-  console.log(req.body);
-  res.send(`${req.body.userName} - ${req.body.userAge}`);
-});
-
-app.get('/', function(req, res) {
-  res.send('Главная страница');
+app.get('/categories/:categoryId/products/:productId', function(
+  request,
+  response
+) {
+  let catId = request.params['categoryId'];
+  let prodId = request.params['productId'];
+  response.send(`Категория: ${catId}  Товар: ${prodId}`);
 });
 
 app.listen(3000, () => {
   console.log(`Server started on 3000 🔥`);
 });
+// http://localhost:3000/categories/smartphone/products/iphone8plus
