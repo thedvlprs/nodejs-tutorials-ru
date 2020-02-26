@@ -279,19 +279,86 @@ localhost:3000/products/8
 */
 
 // Мы можем использовать более сложные комбинации параметров:
+// const express = require('express');
+// const app = express();
+
+// app.get('/categories/:categoryId/products/:productId', function(
+//   request,
+//   response
+// ) {
+//   let catId = request.params['categoryId'];
+//   let prodId = request.params['productId'];
+//   response.send(`Категория: ${catId}  Товар: ${prodId}`);
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+// http://localhost:3000/categories/smartphone/products/iphone8plus
+
+// TODO: Router
+// const express = require('express');
+// const app = express();
+
+// app.use('/about', function(req, res) {
+//   res.send('О сайте');
+// });
+
+// app.use('/products/create', function(req, res) {
+//   res.send('Добавление товара');
+// });
+
+// app.use('/products/:id', function(req, res) {
+//   res.send(`Товар ${req.params.id}`);
+// });
+
+// app.use('/products/', function(req, res) {
+//   res.send('Список товаров');
+// });
+
+// app.use('/', function(req, res) {
+//   res.send('Главная страница');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+/*
+Здесь у нас есть пять маршрутов, которые обрабатываются различными обработчиками. Но три из этих маршрутов начинаются с "/products" и условно относятся к некоторому функционалу по работе с товарами (просмотр списка товаров, просмотр одного товара по id и добавление товара). Объект Router позволяет связать подобный функционал в одно целое и упростить управление им. Например, перепишем предыдущий пример с использованием объекта Router:
+*/
+
 const express = require('express');
 const app = express();
 
-app.get('/categories/:categoryId/products/:productId', function(
-  request,
-  response
-) {
-  let catId = request.params['categoryId'];
-  let prodId = request.params['productId'];
-  response.send(`Категория: ${catId}  Товар: ${prodId}`);
+// определяем Router
+const productRouter = express.Router();
+
+// определяем маршруты и их обработчики внутри роутера
+productRouter.use('/create', function(request, response) {
+  response.send('Добавление товара');
+});
+productRouter.use('/:id', function(request, response) {
+  response.send(`Товар ${request.params.id}`);
+});
+productRouter.use('/', function(request, response) {
+  response.send('Список товаров');
+});
+// сопотавляем роутер с конечной точкой "/products"
+app.use('/products', productRouter);
+
+app.use('/about', function(request, response) {
+  response.send('О сайте');
+});
+
+app.use('/', function(request, response) {
+  response.send('Главная страница');
 });
 
 app.listen(3000, () => {
   console.log(`Server started on 3000 🔥`);
 });
-// http://localhost:3000/categories/smartphone/products/iphone8plus
+
+/*
+Здесь определен объект productRouter, который обрабатывает все запросы по маршруту "/products". Это главный маршрут. Однако в рамках этого маршрута может быть подмаршрут "/" со своим обработчиком, а также подмаршруты "/:id" и "/create", которые также имеют свои обработчики.
+*/
