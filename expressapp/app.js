@@ -364,27 +364,91 @@ localhost:3000/products/8
 */
 
 // TODO: JSON и AJAX
+// const express = require('express');
+
+// const app = express();
+// // создаем парсер для данных в формате json
+// const jsonParser = express.json();
+
+// app.post('/user', jsonParser, function(req, res) {
+//   console.log(req.body);
+//   if (!req.body) return res.sendStatus(400);
+
+//   res.json(req.body); // отправляем пришедший ответ обратно
+// });
+
+// app.get('/', function(req, res) {
+//   res.sendFile(__dirname + '/index.html');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+/*
+Запустим приложение и обратимся к корню веб-сайта. Введем какие-нибудь данные и после отправки в консоли браузера отобразится ответ сервера.
+*/
+
+// TODO: Представления и движок представлений Handlebars
+// const express = require('express');
+
+// const app = express();
+
+// app.set('view engine', 'hbs');
+
+// app.use('/contact', function(req, res) {
+//   res.render('contact.hbs', {
+//     title: 'Мои контакты',
+//     email: 'contact@email.com',
+//     phone: '+555 555 05 55'
+//   });
+// });
+
+// app.use('/', function(req, res) {
+//   res.send('Главная страница');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+// Рассмотрим более сложный случай, пусть в представление передается массив:
+// const express = require('express');
+
+// const app = express();
+// app.set('view engine', 'hbs');
+
+// app.use('/contact', function(req, res) {
+//   res.render('contact.hbs', {
+//     title: 'Мои контакты',
+//     emailsVisible: true,
+//     emails: ['example@email.com', 'admin@email.com'],
+//     phone: '+555 55 05 55'
+//   });
+// });
+
+// app.use('/', function(req, res) {
+//   res.send('Главная страница');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+/* Изменение пути к предтавлениям
+По умолчанию представления помещаются в папку views, но мы можем выбрать любую другую папку в проекте. Для этого необходимо установить параметр views: 
+*/
 const express = require('express');
 
 const app = express();
-// создаем парсер для данных в формате json
-const jsonParser = express.json();
 
-app.post('/user', jsonParser, function(req, res) {
-  console.log(req.body);
-  if (!req.body) return res.sendStatus(400);
+app.set('view engine', 'hbs');
+app.set('views', 'templates'); // установка пути к представлениям
 
-  res.json(req.body); // отправляем пришедший ответ обратно
-});
-
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/index.html');
+app.use('/contact', function(req, res) {
+  res.render('contact');
 });
 
 app.listen(3000, () => {
   console.log(`Server started on 3000 🔥`);
 });
-
-/*
-Запустим приложение и обратимся к корню веб-сайта. Введем какие-нибудь данные и после отправки в консоли браузера отобразится ответ сервера.
-*/
