@@ -454,10 +454,51 @@ localhost:3000/products/8
 // });
 
 // TODO: Частичные представления в Handlebars
+// const express = require('express');
+// const hbs = require('hbs');
+// const app = express();
+
+// app.set('view engine', 'hbs');
+// hbs.registerPartials(__dirname + '/views/partials');
+
+// app.use('/contact', function(req, res) {
+//   res.render('contact', {
+//     title: 'Мои контакты',
+//     emailsVisible: true,
+//     emails: ['admin@email.com', 'support@email.com'],
+//     phone: '+555 55 55 55'
+//   });
+// });
+
+// app.use('/', function(req, res) {
+//   res.render('home.hbs');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+/*
+Для настройки функционала частичных представлений в коде используется вызов:
+hbs.registerPartials(__dirname + "/views/partials"); который устанавливает каталог, где располагаются частичные представления.
+И если мы запустим проект и обратимся по одному из двух маршрутов: "/" или "/contact", то после рендеринга представления веб-страницы будет содержать меню и футер
+*/
+
+// TODO: Layout в Handlebars
 const express = require('express');
+const expressHbs = require('express-handlebars');
 const hbs = require('hbs');
 const app = express();
 
+// устанавливаем настройки для файлов layout
+app.engine(
+  'hbs',
+  expressHbs({
+    layoutsDir: 'views/layouts',
+    defaultLayout: 'layout',
+    extname: 'hbs'
+  })
+);
 app.set('view engine', 'hbs');
 hbs.registerPartials(__dirname + '/views/partials');
 
@@ -477,8 +518,3 @@ app.use('/', function(req, res) {
 app.listen(3000, () => {
   console.log(`Server started on 3000 🔥`);
 });
-/*
-Для настройки функционала частичных представлений в коде используется вызов:
-hbs.registerPartials(__dirname + "/views/partials"); который устанавливает каталог, где располагаются частичные представления.
-И если мы запустим проект и обратимся по одному из двух маршрутов: "/" или "/contact", то после рендеринга представления веб-страницы будет содержать меню и футер
-*/
