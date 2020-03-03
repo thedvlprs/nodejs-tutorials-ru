@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "Jack Shephard",
+        "seat": "13B"
+    },
+    {
+        "id": 2,
+        "name": "Kate Austin",
+        "seat": "32C"
+    },
+    {
+        "id": 3,
+        "name": "James 'Sawyer' Ford",
+        "seat": "27D"
+    },
+    {
+        "name": "John Doe",
+        "seat": "68A",
+        "id": 4
+    }
+]

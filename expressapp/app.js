@@ -614,25 +614,25 @@ hbs.registerPartials(__dirname + "/views/partials"); который устана
 */
 
 // TODO: Частичные представления и layout в Pug
-const express = require('express');
+// const express = require('express');
 
-const app = express();
+// const app = express();
 
-app.set('view engine', 'pug');
+// app.set('view engine', 'pug');
 
-app.use('/contact', function(req, res) {
-  res.render('contact', {
-    title: 'Мои контакты',
-    emailsVisible: true,
-    emails: ['admin@email.com', 'contact@email.com'],
-    phone: '+555 55 55 55'
-  });
-});
+// app.use('/contact', function(req, res) {
+//   res.render('contact', {
+//     title: 'Мои контакты',
+//     emailsVisible: true,
+//     emails: ['admin@email.com', 'contact@email.com'],
+//     phone: '+555 55 55 55'
+//   });
+// });
 
-app.use('/', function(req, res) {
-  res.send('Главная страница');
-});
+// app.use('/', function(req, res) {
+//   res.send('Главная страница');
+// });
 
-app.listen(3000, () => {
-  console.log(`Server started on 3000 🔥`);
-});
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
