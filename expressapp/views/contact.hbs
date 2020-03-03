@@ -2,21 +2,19 @@
 <html>
 
 <head>
-    <title>Контакты</title>
+    <title>{{title}}</title>
     <meta charset="utf-8" />
 </head>
 
 <body>
-    <h1>{{ title }}</h1>
+    {{> menu}}
 
-    {{#if emailsVisible}}
-        <h3>Электронные адреса</h3>
-        <ul>
-            {{#each emails}}
-            <li>{{ this }}</li>
-            {{/each}}
-        </ul>
-    {{/if}}
-    <p>Телефон: {{ phone }}</p>
+    <h1>{{title}}</h1>
+    <p>Электронный адрес: {{email}}</p>
+    <p>Телефон: {{phone}}</p>
+
+    {{> footer}}
+
+    {{!-- Для вставки частичного представления применяется выражение {{> menu}}, в котором прописывается имя файла частичного представления без расширения. --}}
 </body>
 <html>
