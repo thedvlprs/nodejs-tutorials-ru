@@ -44,6 +44,7 @@ welcome/node_modules
 modulesapp/node_modules
 expressapp/node_modules
 webapp/node_modules
+testapp/node_modules
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
