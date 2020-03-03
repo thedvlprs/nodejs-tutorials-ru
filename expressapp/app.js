@@ -520,41 +520,67 @@ hbs.registerPartials(__dirname + "/views/partials"); который устана
 // });
 
 // TODO: Хелперы в Handlebars
+// const express = require('express');
+// const hbs = require('hbs');
+
+// const app = express();
+
+// hbs.registerHelper('getTime', function() {
+//   var myDate = new Date();
+//   var hour = myDate.getHours();
+//   var minute = myDate.getMinutes();
+//   var second = myDate.getSeconds();
+//   if (minute < 10) {
+//     minute = '0' + minute;
+//   }
+//   if (second < 10) {
+//     second = '0' + second;
+//   }
+//   return 'Текущее время: ' + hour + ':' + minute + ':' + second;
+// });
+
+// hbs.registerHelper('createStringList', function(array) {
+//   var result = '';
+//   for (var i = 0; i < array.length; i++) {
+//     result += '<li>' + array[i] + '</li>';
+//   }
+//   return new hbs.SafeString('<ul>' + result + '</ul>');
+// });
+
+// app.set('view engine', 'hbs');
+
+// app.get('/', function(req, res) {
+//   res.render('home.hbs', {
+//     fruit: ['orange', 'banana', 'apple', 'grape']
+//   });
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+// TODO: Движок EJS
 const express = require('express');
-const hbs = require('hbs');
 
 const app = express();
 
-hbs.registerHelper('getTime', function() {
-  var myDate = new Date();
-  var hour = myDate.getHours();
-  var minute = myDate.getMinutes();
-  var second = myDate.getSeconds();
-  if (minute < 10) {
-    minute = '0' + minute;
-  }
-  if (second < 10) {
-    second = '0' + second;
-  }
-  return 'Текущее время: ' + hour + ':' + minute + ':' + second;
-});
+app.set('view engine', 'ejs');
 
-hbs.registerHelper('createStringList', function(array) {
-  var result = '';
-  for (var i = 0; i < array.length; i++) {
-    result += '<li>' + array[i] + '</li>';
-  }
-  return new hbs.SafeString('<ul>' + result + '</ul>');
-});
-
-app.set('view engine', 'hbs');
-
-app.get('/', function(req, res) {
-  res.render('home.hbs', {
-    fruit: ['orange', 'banana', 'apple', 'grape']
+app.use('/contact', function(req, res) {
+  res.render('contact', {
+    title: 'Мои контакты',
+    emailsVisible: true,
+    emails: ['admin@email.com', 'contact@email.com'],
+    phone: '+555 55 55 55'
   });
+});
+
+app.use('/', function(req, res) {
+  res.send('Главная страница');
 });
 
 app.listen(3000, () => {
   console.log(`Server started on 3000 🔥`);
 });
+
+/* По факту здесь определен тот же код, что и в одной из предыдущих тем, только теперь устанавливается движок ejs: app.set("view engine", "ejs"); */
