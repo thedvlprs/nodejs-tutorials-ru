@@ -58,20 +58,20 @@ equal
 Функция assert.equal() сравнивает два значения. Если они не равны, то генерируется ошибка. 
 */
 
-var assert = require('assert');
-var operations = require('./operations');
+// var assert = require('assert');
+// var operations = require('./operations');
 
-it('should multiply two numbers', function() {
-  var expected = 15;
-  var result = operations.multiply(3, 5);
-  assert.equal(result, expected);
-});
+// it('should multiply two numbers', function() {
+//   var expected = 15;
+//   var result = operations.multiply(3, 5);
+//   assert.equal(result, expected);
+// });
 
 /* Если оба значения будут равны, то мы опять же увидим в консоли, что тесты пройдены. Если же значения не будут равны, то мы увидим красные маркеры с сообщениями об ошибке */
 
 /* В противоположность этой функции функция assert.notEqual() генерирует ошибку, если оба значения равны: */
-it('should multiply two numbers', function() {
-  var expected = 15;
-  var result = operations.multiply(3, 5);
-  assert.notEqual(result, expected);
-});
+// it('should multiply two numbers', function() {
+//   var expected = 15;
+//   var result = operations.multiply(3, 5);
+//   assert.notEqual(result, expected);
+// });
