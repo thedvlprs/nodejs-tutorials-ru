@@ -108,22 +108,22 @@ mongoClient.connect(function(err, client) {
 
 /*
  С помощью метода find() мы можем дополнительно отфильтровать извлекаемые документы. Например, нам надо найти всех пользователей, у которых имя - Tom: */
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
 
-const url = 'mongodb://localhost:27017/';
-const mongoClient = new MongoClient(url, { useNewUrlParser: true });
+// const url = 'mongodb://localhost:27017/';
+// const mongoClient = new MongoClient(url, { useNewUrlParser: true });
 
-mongoClient.connect(function(err, client) {
-  const db = client.db('usersdb');
-  const collection = db.collection('users');
+// mongoClient.connect(function(err, client) {
+//   const db = client.db('usersdb');
+//   const collection = db.collection('users');
 
-  if (err) return console.log(err);
+//   if (err) return console.log(err);
 
-  collection.find({ name: 'Tom' }).toArray(function(err, results) {
-    console.log(results);
-    client.close();
-  });
-});
+//   collection.find({ name: 'Tom' }).toArray(function(err, results) {
+//     console.log(results);
+//     client.close();
+//   });
+// });
 
 /*
 Мы можем устанавливать дополнительные критерии фильтрации, например, добавим фильтрацию по возрасту:
@@ -134,3 +134,86 @@ collection.find({name: "Tom", age: 23}).toArray(function(err, results){
     client.close();
 });
 */
+
+// TODO: Удаление документов в MongoDB
+
+/*
+Удалять документы в MongoDB можно различными способами. Здесь надо отметить следующие методы коллекции:
+
+- deleteMany(): удаляет все документы, которые соответствуют определенному критерию
+
+- deleteOne(): удаляет один документ, который соответствует определенному критерию
+
+- findOneAndDelete(): получает и удаляет один документ, который соответствует определенному критерию
+
+- drop(): удаляет всю коллекцию */
+
+// deleteMany. Удалим всех пользователей, у которых имя "Tom":
+const MongoClient = require('mongodb').MongoClient;
+
+const url = 'mongodb://localhost:27017/';
+const mongoClient = new MongoClient(
+  url,
+  { useNewUrlParser: true },
+  { useUnifiedTopology: true }
+);
+
+mongoClient.connect(function(err, client) {
+  if (err) return console.log(err);
+
+  const db = client.db('usersdb');
+  db.collection('users').deleteMany({ name: 'Tom' }, function(err, result) {
+    console.log(result);
+    client.close();
+  });
+});
+
+/* Первый параметр в методе - фильтр документов, а второй - функция обратного вызова, в которой мы можем получить результат удаления. При этом результат удаления будет представлять сложный объект, содержащий подробную информацию */
+
+// deleteOne | Метод deleteOne() аналогичен методу deleteMany() за тем исключением, что удаляет только один объект:
+const MongoClient = require('mongodb').MongoClient;
+
+const url = 'mongodb://localhost:27017/';
+const mongoClient = new MongoClient(url, { useNewUrlParser: true });
+
+mongoClient.connect(function(err, client) {
+  if (err) return console.log(err);
+
+  const db = client.db('usersdb');
+  db.collection('users').deleteOne({ name: 'Bob' }, function(err, result) {
+    console.log(result);
+    client.close();
+  });
+});
+
+// findOneAndDelete | Метод findOneAndDelete() удаляет один документ по определенному критерию, но по сравнению с методом deleteOne() он возвращает удаленный документ:
+const MongoClient = require('mongodb').MongoClient;
+
+const url = 'mongodb://localhost:27017/';
+const mongoClient = new MongoClient(url, { useNewUrlParser: true });
+
+mongoClient.connect(function(err, client) {
+  if (err) return console.log(err);
+
+  const db = client.db('usersdb');
+  db.collection('users').findOneAndDelete({ age: 21 }, function(err, result) {
+    console.log(result);
+    client.close();
+  });
+});
+
+// drop | Метод drop() удаляет всю коллекцию:
+const MongoClient = require('mongodb').MongoClient;
+
+const url = 'mongodb://localhost:27017/';
+const mongoClient = new MongoClient(url, { useNewUrlParser: true });
+
+mongoClient.connect(function(err, client) {
+  if (err) return console.log(err);
+
+  const db = client.db('usersdb');
+  db.collection('users').drop(function(err, result) {
+    console.log(result);
+    client.close();
+  });
+});
