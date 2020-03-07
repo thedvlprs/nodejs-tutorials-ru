@@ -490,3 +490,71 @@ const userScheme = new Schema({
     }
 });
 */
+
+// TODO: CRUD в Mongoose
+// const mongoose = require('mongoose');
+// const Schema = mongoose.Schema;
+
+// // подключение
+// mongoose.connect('mongodb://localhost:27017/usersdb', {
+//   useNewUrlParser: true
+// });
+
+// // установка схемы
+// const userScheme = new Schema({
+//   name: {
+//     type: String,
+//     required: true,
+//     minlength: 3,
+//     maxlength: 20
+//   },
+//   age: {
+//     type: Number,
+//     required: true,
+//     min: 1,
+//     max: 100
+//   }
+// });
+// const User = mongoose.model('User', userScheme);
+// User.create({ name: 'Benjamin Linus', age: 41 }, function(err, doc) {
+//   mongoose.disconnect();
+
+//   if (err) return console.log(err);
+
+//   console.log('Сохранен объект user', doc);
+// });
+
+/* 
+Получение данных
+Для получения данных можно использовать целый набор методов:
+
+  - find: возвращает все объекты, которые соответствуют критерию фильтрации
+
+  - findById: возвращает один объект по значению поля _id
+
+  - findOne: возвращает один объект, который соответствует критерию фильтрации
+
+Метод find() в качестве первого параметра принимает критерий фильтрации, а второй параметр - функция обратного вызова, в которую передаются полученные из бд документы:
+*/
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+mongoose.connect('mongodb://localhost:27017/usersdb', {
+  useNewUrlParser: true
+});
+
+const userScheme = new Schema(
+  { name: String, age: Number },
+  { versionKey: false }
+);
+const User = mongoose.model('User', userScheme);
+
+User.find({}, function(err, docs) {
+  mongoose.disconnect();
+
+  if (err) return console.log(err);
+
+  console.log(docs);
+});
+
+// Если в качестве критерия фильтрации передаются пустые фигурные скобки ({}), то возвращаются все объекты
