@@ -302,96 +302,96 @@ findOneAndUpdate
 // });
 
 // TODO: Express и MongoDB
-const express = require('express');
-const MongoClient = require('mongodb').MongoClient;
-const objectId = require('mongodb').ObjectID;
+// const express = require('express');
+// const MongoClient = require('mongodb').MongoClient;
+// const objectId = require('mongodb').ObjectID;
 
-const app = express();
-const jsonParser = express.json();
+// const app = express();
+// const jsonParser = express.json();
 
-const mongoClient = new MongoClient('mongodb://localhost:27017/', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// const mongoClient = new MongoClient('mongodb://localhost:27017/', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
 
-let dbClient;
+// let dbClient;
 
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/public'));
 
-mongoClient.connect(function(err, client) {
-  if (err) return console.log(err);
-  dbClient = client;
-  app.locals.collection = client.db('usersdb').collection('users');
-  app.listen(3000, () => {
-    console.log(`Server started on 3000 🔥`);
-  });
-});
+// mongoClient.connect(function(err, client) {
+//   if (err) return console.log(err);
+//   dbClient = client;
+//   app.locals.collection = client.db('usersdb').collection('users');
+//   app.listen(3000, () => {
+//     console.log(`Server started on 3000 🔥`);
+//   });
+// });
 
-app.get('/api/users', function(req, res) {
-  const collection = req.app.locals.collection;
-  collection.find({}).toArray(function(err, users) {
-    if (err) return console.log(err);
-    res.send(users);
-  });
-});
+// app.get('/api/users', function(req, res) {
+//   const collection = req.app.locals.collection;
+//   collection.find({}).toArray(function(err, users) {
+//     if (err) return console.log(err);
+//     res.send(users);
+//   });
+// });
 
-app.get('/api/users/:id', function(req, res) {
-  const id = new objectId(req.params.id);
-  const collection = req.app.locals.collection;
-  collection.findOne({ _id: id }, function(err, user) {
-    if (err) return console.log(err);
-    res.send(user);
-  });
-});
+// app.get('/api/users/:id', function(req, res) {
+//   const id = new objectId(req.params.id);
+//   const collection = req.app.locals.collection;
+//   collection.findOne({ _id: id }, function(err, user) {
+//     if (err) return console.log(err);
+//     res.send(user);
+//   });
+// });
 
-app.post('/api/users', jsonParser, function(req, res) {
-  if (!req.body) return res.sendStatus(400);
+// app.post('/api/users', jsonParser, function(req, res) {
+//   if (!req.body) return res.sendStatus(400);
 
-  const userName = req.body.name;
-  const userAge = req.body.age;
-  const user = { name: userName, age: userAge };
+//   const userName = req.body.name;
+//   const userAge = req.body.age;
+//   const user = { name: userName, age: userAge };
 
-  const collection = req.app.locals.collection;
-  collection.insertOne(user, function(err, result) {
-    if (err) return console.log(err);
-    res.send(user);
-  });
-});
+//   const collection = req.app.locals.collection;
+//   collection.insertOne(user, function(err, result) {
+//     if (err) return console.log(err);
+//     res.send(user);
+//   });
+// });
 
-app.delete('/api/users/:id', function(req, res) {
-  const id = new objectId(req.params.id);
-  const collection = req.app.locals.collection;
-  collection.findOneAndDelete({ _id: id }, function(err, result) {
-    if (err) return console.log(err);
-    let user = result.value;
-    res.send(user);
-  });
-});
+// app.delete('/api/users/:id', function(req, res) {
+//   const id = new objectId(req.params.id);
+//   const collection = req.app.locals.collection;
+//   collection.findOneAndDelete({ _id: id }, function(err, result) {
+//     if (err) return console.log(err);
+//     let user = result.value;
+//     res.send(user);
+//   });
+// });
 
-app.put('/api/users', jsonParser, function(req, res) {
-  if (!req.body) return res.sendStatus(400);
-  const id = new objectId(req.body.id);
-  const userName = req.body.name;
-  const userAge = req.body.age;
+// app.put('/api/users', jsonParser, function(req, res) {
+//   if (!req.body) return res.sendStatus(400);
+//   const id = new objectId(req.body.id);
+//   const userName = req.body.name;
+//   const userAge = req.body.age;
 
-  const collection = req.app.locals.collection;
-  collection.findOneAndUpdate(
-    { _id: id },
-    { $set: { age: userAge, name: userName } },
-    { returnOriginal: false },
-    function(err, result) {
-      if (err) return console.log(err);
-      const user = result.value;
-      res.send(user);
-    }
-  );
-});
+//   const collection = req.app.locals.collection;
+//   collection.findOneAndUpdate(
+//     { _id: id },
+//     { $set: { age: userAge, name: userName } },
+//     { returnOriginal: false },
+//     function(err, result) {
+//       if (err) return console.log(err);
+//       const user = result.value;
+//       res.send(user);
+//     }
+//   );
+// });
 
-// прослушиваем прерывание работы программы (ctrl-c)
-process.on('SIGINT', () => {
-  dbClient.close();
-  process.exit();
-});
+// // прослушиваем прерывание работы программы (ctrl-c)
+// process.on('SIGINT', () => {
+//   dbClient.close();
+//   process.exit();
+// });
 
 /* Для каждого типа запросов здесь определен свой обработчик Express. И в каждом из обработчиков мы каждый раз обращаемся к базе данных. Чтобы не открывать и закрывать подключение каждый раз при каждом запросе, мы открываем подключение в самом начале и только после открытия подключения запускаем прослушивание входящих запросов:
 
@@ -416,3 +416,34 @@ process.on("SIGINT", () => {
 
 И поскольку Express в качестве хранилища статических файлов использует папку public, то при обращении к приложению по корневому маршруту http://localhost:3000 клиент получит данный файл (public/index.html).
 */
+
+// TODO: Mongoose
+/* Mongoose представляет специальную ODM-библиотеку (Object Data Modelling) для работы с MongoDB, которая позволяет сопоставлять объекты классов и документы коллекций из базы данных. Грубо говоря, Mongoose работает подобно инструментам ORM.*/
+
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+// установка схемы
+const userSchema = new Schema({
+  name: String,
+  age: Number
+});
+
+// подключение
+mongoose.connect('mongodb://localhost:27017/usersdb', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+const User = mongoose.model('User', userSchema);
+const user = new User({
+  name: 'John Locke',
+  age: 48
+});
+
+user.save(function(err) {
+  mongoose.disconnect(); // отключение от бд
+
+  if (err) return console.log(err);
+  console.log('Сохранен объект', user);
+});
