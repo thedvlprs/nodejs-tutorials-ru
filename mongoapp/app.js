@@ -420,30 +420,73 @@ process.on("SIGINT", () => {
 // TODO: Mongoose
 /* Mongoose представляет специальную ODM-библиотеку (Object Data Modelling) для работы с MongoDB, которая позволяет сопоставлять объекты классов и документы коллекций из базы данных. Грубо говоря, Mongoose работает подобно инструментам ORM.*/
 
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+// const mongoose = require('mongoose');
+// const Schema = mongoose.Schema;
 
-// установка схемы
-const userSchema = new Schema({
-  name: String,
-  age: Number
+// // установка схемы
+// const userSchema = new Schema({
+//   name: String,
+//   age: Number
+// });
+
+// // подключение
+// mongoose.connect('mongodb://localhost:27017/usersdb', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
+
+// const User = mongoose.model('User', userSchema);
+// const user = new User({
+//   name: 'John Locke',
+//   age: 48
+// });
+
+// user.save(function(err) {
+//   mongoose.disconnect(); // отключение от бд
+
+//   if (err) return console.log(err);
+//   console.log('Сохранен объект', user);
+// });
+
+// TODO: Определение схемы в Mongoose
+/* Схема в Mongoose определяет метаданные модели - ее свойства, типы данных и ряд другой информации.
+
+В прошлой теме схема определялась следующим образом:
+
+const userScheme = new Schema({
+    name: String,
+    age: Number
 });
 
-// подключение
-mongoose.connect('mongodb://localhost:27017/usersdb', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+Определение типа
+В качестве типа данных можно указывать одно из следующих значений:
+  - String
 
-const User = mongoose.model('User', userSchema);
-const user = new User({
-  name: 'John Locke',
-  age: 48
-});
+  - Number
 
-user.save(function(err) {
-  mongoose.disconnect(); // отключение от бд
+  - Date
 
-  if (err) return console.log(err);
-  console.log('Сохранен объект', user);
+  - Buffer
+
+  - Boolean
+
+  - Mixed
+
+  - Objectid
+
+  - Array
+
+  - Decimal128
+
+  - Map
+
+const userScheme = new Schema({
+    name: String,
+    age: Number,
+    company: {
+        name: String,
+        employee: [String], // тип - массив строк
+        date: Date
+    }
 });
+*/
