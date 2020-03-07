@@ -1,0 +1,7 @@
+{
+  "name": "mysqlapp",
+  "version": "1.0.0",
+  "dependencies": {
+    "mysql2": "^2.1.0"
+  }
+}
