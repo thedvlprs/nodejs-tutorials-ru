@@ -149,60 +149,134 @@ collection.find({name: "Tom", age: 23}).toArray(function(err, results){
 - drop(): удаляет всю коллекцию */
 
 // deleteMany. Удалим всех пользователей, у которых имя "Tom":
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
 
-const url = 'mongodb://localhost:27017/';
-const mongoClient = new MongoClient(
-  url,
-  { useNewUrlParser: true },
-  { useUnifiedTopology: true }
-);
+// const url = 'mongodb://localhost:27017/';
+// const mongoClient = new MongoClient(
+//   url,
+//   { useNewUrlParser: true },
+//   { useUnifiedTopology: true }
+// );
 
-mongoClient.connect(function(err, client) {
-  if (err) return console.log(err);
+// mongoClient.connect(function(err, client) {
+//   if (err) return console.log(err);
 
-  const db = client.db('usersdb');
-  db.collection('users').deleteMany({ name: 'Tom' }, function(err, result) {
-    console.log(result);
-    client.close();
-  });
-});
+//   const db = client.db('usersdb');
+//   db.collection('users').deleteMany({ name: 'Tom' }, function(err, result) {
+//     console.log(result);
+//     client.close();
+//   });
+// });
 
 /* Первый параметр в методе - фильтр документов, а второй - функция обратного вызова, в которой мы можем получить результат удаления. При этом результат удаления будет представлять сложный объект, содержащий подробную информацию */
 
 // deleteOne | Метод deleteOne() аналогичен методу deleteMany() за тем исключением, что удаляет только один объект:
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
 
-const url = 'mongodb://localhost:27017/';
-const mongoClient = new MongoClient(url, { useNewUrlParser: true });
+// const url = 'mongodb://localhost:27017/';
+// const mongoClient = new MongoClient(url, { useNewUrlParser: true });
 
-mongoClient.connect(function(err, client) {
-  if (err) return console.log(err);
+// mongoClient.connect(function(err, client) {
+//   if (err) return console.log(err);
 
-  const db = client.db('usersdb');
-  db.collection('users').deleteOne({ name: 'Bob' }, function(err, result) {
-    console.log(result);
-    client.close();
-  });
-});
+//   const db = client.db('usersdb');
+//   db.collection('users').deleteOne({ name: 'Bob' }, function(err, result) {
+//     console.log(result);
+//     client.close();
+//   });
+// });
 
 // findOneAndDelete | Метод findOneAndDelete() удаляет один документ по определенному критерию, но по сравнению с методом deleteOne() он возвращает удаленный документ:
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
 
-const url = 'mongodb://localhost:27017/';
-const mongoClient = new MongoClient(url, { useNewUrlParser: true });
+// const url = 'mongodb://localhost:27017/';
+// const mongoClient = new MongoClient(url, { useNewUrlParser: true });
 
-mongoClient.connect(function(err, client) {
-  if (err) return console.log(err);
+// mongoClient.connect(function(err, client) {
+//   if (err) return console.log(err);
 
-  const db = client.db('usersdb');
-  db.collection('users').findOneAndDelete({ age: 21 }, function(err, result) {
-    console.log(result);
-    client.close();
-  });
-});
+//   const db = client.db('usersdb');
+//   db.collection('users').findOneAndDelete({ age: 21 }, function(err, result) {
+//     console.log(result);
+//     client.close();
+//   });
+// });
 
 // drop | Метод drop() удаляет всю коллекцию:
+// const MongoClient = require('mongodb').MongoClient;
+
+// const url = 'mongodb://localhost:27017/';
+// const mongoClient = new MongoClient(url, { useNewUrlParser: true });
+
+// mongoClient.connect(function(err, client) {
+//   if (err) return console.log(err);
+
+//   const db = client.db('usersdb');
+//   db.collection('users').drop(function(err, result) {
+//     console.log(result);
+//     client.close();
+//   });
+// });
+
+// TODO: Обновление документов в MongoDB
+/*
+Для обновления элементов в MongoDB есть несколько методов:
+
+  - updateOne: обновляет один документ, который соответствует критерию фильтрации, и возвращает информацию об операции обновления
+
+  - updateMany: обновляет все документы, которые соответствуют критерию фильтрации, и возвращает информацию об операции обновления
+
+  - findOneAndUpdate: обновляет один документ, который соответствует критерию фильтрации, и возвращает обновленный документ
+
+findOneAndUpdate
+Метод findOneAndUpdate() обновляет один элемент. Он принимает следующие параметры:
+
+  - Критерий фильтрации документа, который надо обновить
+
+  - Параметр обновления
+
+  - Дополнительные опции обновления, которые по умолчанию имеют значение null
+
+  - Функция обратного вызова, которая выполняется при обновлении
+
+Например, обновим первого пользователя в бд, у которого возраст - 21:
+*/
+// const MongoClient = require('mongodb').MongoClient;
+
+// const url = 'mongodb://localhost:27017/';
+// const mongoClient = new MongoClient(url, { useNewUrlParser: true });
+
+// let users = [
+//   { name: 'Bob', age: 34 },
+//   { name: 'Alice', age: 21 },
+//   { name: 'Tom', age: 45 }
+// ];
+// mongoClient.connect(function(err, client) {
+//   if (err) return console.log(err);
+
+//   const db = client.db('usersdb');
+//   const col = db.collection('users');
+//   col.insertMany(users, function(err, results) {
+//     col.findOneAndUpdate(
+//       { age: 21 }, // критерий выборки
+//       { $set: { age: 25 } }, // параметр обновления
+//       function(err, result) {
+//         console.log(result);
+//         client.close();
+//       }
+//     );
+//   });
+// });
+
+/*
+Сначала здесь происходит добавление 3 пользователей в базу данных, а после добавления идет обновление.
+
+Для обновления применяется объект { $set: {age: 25}}. Параметр $set позволяет обновить значения для одного поля или группы полей. В данном случае изменяется поле age.
+
+Третий параметр - функция обратного вызова выводит результат обновления. По умолчанию это старое состояние измененного документа
+*/
+
+/* Но, допустим, после обновления мы хотим получать не старое, а новое состояние измененного документа. Для этого мы можем задать дополнительные опции обновления. */
 const MongoClient = require('mongodb').MongoClient;
 
 const url = 'mongodb://localhost:27017/';
@@ -212,8 +286,17 @@ mongoClient.connect(function(err, client) {
   if (err) return console.log(err);
 
   const db = client.db('usersdb');
-  db.collection('users').drop(function(err, result) {
-    console.log(result);
-    client.close();
-  });
+  const col = db.collection('users');
+  col.findOneAndUpdate(
+    { name: 'Bob' }, // критерий выборки
+    { $set: { name: 'Sam' } }, // параметр обновления
+    {
+      // доп. опции обновления
+      returnOriginal: false
+    },
+    function(err, result) {
+      console.log(result);
+      client.close();
+    }
+  );
 });
