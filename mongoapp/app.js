@@ -277,26 +277,142 @@ findOneAndUpdate
 */
 
 /* Но, допустим, после обновления мы хотим получать не старое, а новое состояние измененного документа. Для этого мы можем задать дополнительные опции обновления. */
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
 
-const url = 'mongodb://localhost:27017/';
-const mongoClient = new MongoClient(url, { useNewUrlParser: true });
+// const url = 'mongodb://localhost:27017/';
+// const mongoClient = new MongoClient(url, { useNewUrlParser: true });
+
+// mongoClient.connect(function(err, client) {
+//   if (err) return console.log(err);
+
+//   const db = client.db('usersdb');
+//   const col = db.collection('users');
+//   col.findOneAndUpdate(
+//     { name: 'Bob' }, // критерий выборки
+//     { $set: { name: 'Sam' } }, // параметр обновления
+//     {
+//       // доп. опции обновления
+//       returnOriginal: false
+//     },
+//     function(err, result) {
+//       console.log(result);
+//       client.close();
+//     }
+//   );
+// });
+
+// TODO: Express и MongoDB
+const express = require('express');
+const MongoClient = require('mongodb').MongoClient;
+const objectId = require('mongodb').ObjectID;
+
+const app = express();
+const jsonParser = express.json();
+
+const mongoClient = new MongoClient('mongodb://localhost:27017/', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+let dbClient;
+
+app.use(express.static(__dirname + '/public'));
 
 mongoClient.connect(function(err, client) {
   if (err) return console.log(err);
+  dbClient = client;
+  app.locals.collection = client.db('usersdb').collection('users');
+  app.listen(3000, () => {
+    console.log(`Server started on 3000 🔥`);
+  });
+});
 
-  const db = client.db('usersdb');
-  const col = db.collection('users');
-  col.findOneAndUpdate(
-    { name: 'Bob' }, // критерий выборки
-    { $set: { name: 'Sam' } }, // параметр обновления
-    {
-      // доп. опции обновления
-      returnOriginal: false
-    },
+app.get('/api/users', function(req, res) {
+  const collection = req.app.locals.collection;
+  collection.find({}).toArray(function(err, users) {
+    if (err) return console.log(err);
+    res.send(users);
+  });
+});
+
+app.get('/api/users/:id', function(req, res) {
+  const id = new objectId(req.params.id);
+  const collection = req.app.locals.collection;
+  collection.findOne({ _id: id }, function(err, user) {
+    if (err) return console.log(err);
+    res.send(user);
+  });
+});
+
+app.post('/api/users', jsonParser, function(req, res) {
+  if (!req.body) return res.sendStatus(400);
+
+  const userName = req.body.name;
+  const userAge = req.body.age;
+  const user = { name: userName, age: userAge };
+
+  const collection = req.app.locals.collection;
+  collection.insertOne(user, function(err, result) {
+    if (err) return console.log(err);
+    res.send(user);
+  });
+});
+
+app.delete('/api/users/:id', function(req, res) {
+  const id = new objectId(req.params.id);
+  const collection = req.app.locals.collection;
+  collection.findOneAndDelete({ _id: id }, function(err, result) {
+    if (err) return console.log(err);
+    let user = result.value;
+    res.send(user);
+  });
+});
+
+app.put('/api/users', jsonParser, function(req, res) {
+  if (!req.body) return res.sendStatus(400);
+  const id = new objectId(req.body.id);
+  const userName = req.body.name;
+  const userAge = req.body.age;
+
+  const collection = req.app.locals.collection;
+  collection.findOneAndUpdate(
+    { _id: id },
+    { $set: { age: userAge, name: userName } },
+    { returnOriginal: false },
     function(err, result) {
-      console.log(result);
-      client.close();
+      if (err) return console.log(err);
+      const user = result.value;
+      res.send(user);
     }
   );
 });
+
+// прослушиваем прерывание работы программы (ctrl-c)
+process.on('SIGINT', () => {
+  dbClient.close();
+  process.exit();
+});
+
+/* Для каждого типа запросов здесь определен свой обработчик Express. И в каждом из обработчиков мы каждый раз обращаемся к базе данных. Чтобы не открывать и закрывать подключение каждый раз при каждом запросе, мы открываем подключение в самом начале и только после открытия подключения запускаем прослушивание входящих запросов:
+
+mongoClient.connect(function(err, client){
+    if(err) return console.log(err);
+    dbClient = client;
+    app.locals.collection = client.db("usersdb").collection("users");
+    app.listen(3000, function(){
+        console.log("Сервер ожидает подключения...");
+    });
+});
+
+Поскольку все взаимодействие будет идти с коллекцией users, то получаем ссылку на эту коллекцию в локальную переменную приложения app.locals.collection. Затем через эту переменную мы сможем получить доступ к коллекции в любом месте приложения.
+
+
+В конце работы скрипта мы можем закрыть подключение, сохраненное в переменную dbClient:
+process.on("SIGINT", () => {
+    dbClient.close();
+    process.exit();
+});
+В данном случае мы прослушиваем событие "SIGINT", которое генерируется при нажатии комбинации CTRL+C в консоли, что завершит выполнение скрипта.
+
+И поскольку Express в качестве хранилища статических файлов использует папку public, то при обращении к приложению по корневому маршруту http://localhost:3000 клиент получит данный файл (public/index.html).
+*/
