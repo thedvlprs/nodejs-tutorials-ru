@@ -264,20 +264,45 @@
 // С помощью свойства affectedRows объекта results мы можем проверить, сколько строк было обновлено.
 
 //! Удаление
+// const mysql = require('mysql2');
+
+// const connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   database: 'usersdb2',
+//   password: '123456'
+// });
+
+// const sql = 'DELETE FROM users WHERE name=?';
+// const data = ['Kate Austen']; // удаляем пользователей с именем Sam
+// connection.query(sql, data, function(err, results) {
+//   if (err) console.log(err);
+//   console.log(results);
+// });
+
+// connection.end();
+
+// TODO: Пулы подключений
 const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
+  connectionLimit: 5,
   host: 'localhost',
   user: 'root',
   database: 'usersdb2',
   password: '123456'
 });
 
-const sql = 'DELETE FROM users WHERE name=?';
-const data = ['Kate Austen']; // удаляем пользователей с именем Sam
-connection.query(sql, data, function(err, results) {
+// добавление объекта
+const sql = 'INSERT INTO users (name, age) VALUES(?, ?) ';
+const data = ['Juliet Burke', 40];
+pool.query(sql, data, function(err, results) {
   if (err) console.log(err);
   console.log(results);
 });
 
-connection.end();
+// получение объектов
+pool.query('SELECT * FROM users', function(err, results) {
+  if (err) console.log(err);
+  console.log(results);
+});
