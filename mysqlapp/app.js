@@ -68,21 +68,43 @@
 
 При параметризации вместо конкретных данных в тексте запроса ставятся плейсхолдеры - знаки вопроса, вместо которых при выполнении запроса будут вставляться собственно данные. Например, добавление данных: */
 
+// const mysql = require('mysql2');
+
+// const connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   database: 'usersdb',
+//   password: '123456'
+// });
+
+// const user = ['Kate Austen', 37];
+// const sql = 'INSERT INTO users(name, age) VALUES(?, ?)';
+
+// connection.query(sql, user, function(err, results) {
+//   if (err) console.log(err);
+//   else console.log('Данные добавлены');
+// });
+
+// connection.end();
+
+// TODO: Promise API
 const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'usersdb',
-  password: '123456'
-});
+const connection = mysql
+  .createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'usersdb',
+    password: 'Supremecoder8*'
+  })
+  .promise();
 
-const user = ['Kate Austen', 37];
-const sql = 'INSERT INTO users(name, age) VALUES(?, ?)';
-
-connection.query(sql, user, function(err, results) {
-  if (err) console.log(err);
-  else console.log('Данные добавлены');
-});
-
-connection.end();
+// получение объектов
+connection
+  .query('SELECT * FROM users')
+  .then(result => {
+    console.log(result);
+  })
+  .catch(err => {
+    console.log(err);
+  });
