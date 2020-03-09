@@ -1,3 +1,5 @@
+// TODO: MVC Pattern. Контроллеры.
+
 // const express = require('express');
 // const app = express();
 // const userController = require('./controllers/userController');
@@ -26,10 +28,32 @@
 //   console.log(`Server started on 3000 🔥`);
 // });
 
+// const express = require('express');
+// const app = express();
+// const userRouter = require('./routes/userRouter');
+// const homeRouter = require('./routes/homeRouter');
+
+// app.use('/users', userRouter);
+// app.use('/', homeRouter);
+
+// app.use(function(req, res, next) {
+//   res.status(404).send('Not Found');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+/* Таким образом, за счет выноса логики обработки маршрутов и организации маршрутов в роутеры в отдельные модули общий код приложения стал проще и яснее.*/
+
+// TODO: Модели и представления
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 const userRouter = require('./routes/userRouter');
 const homeRouter = require('./routes/homeRouter');
+
+app.set('view engine', 'hbs');
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/users', userRouter);
 app.use('/', homeRouter);
@@ -41,4 +65,3 @@ app.use(function(req, res, next) {
 app.listen(3000, () => {
   console.log(`Server started on 3000 🔥`);
 });
-/* Таким образом, за счет выноса логики обработки маршрутов и организации маршрутов в роутеры в отдельные модули общий код приложения стал проще и яснее.*/
