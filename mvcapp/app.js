@@ -46,7 +46,29 @@
 /* Таким образом, за счет выноса логики обработки маршрутов и организации маршрутов в роутеры в отдельные модули общий код приложения стал проще и яснее.*/
 
 // TODO: Модели и представления
+// const express = require('express');
+// const app = express();
+// const bodyParser = require('body-parser');
+// const userRouter = require('./routes/userRouter');
+// const homeRouter = require('./routes/homeRouter');
+
+// app.set('view engine', 'hbs');
+// app.use(bodyParser.urlencoded({ extended: false }));
+
+// app.use('/users', userRouter);
+// app.use('/', homeRouter);
+
+// app.use(function(req, res, next) {
+//   res.status(404).send('Not Found');
+// });
+
+// app.listen(3000, () => {
+//   console.log(`Server started on 3000 🔥`);
+// });
+
+// TODO: Связь с базой данных MongoDB
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 const userRouter = require('./routes/userRouter');
@@ -62,6 +84,16 @@ app.use(function(req, res, next) {
   res.status(404).send('Not Found');
 });
 
-app.listen(3000, () => {
-  console.log(`Server started on 3000 🔥`);
-});
+mongoose.connect(
+  'mongodb://localhost:27017/usersdb',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  },
+  function(err) {
+    if (err) return console.log(err);
+    app.listen(3000, () => {
+      console.log(`Server started on 3000 🔥`);
+    });
+  }
+);
