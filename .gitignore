@@ -49,6 +49,7 @@ mongoapp/node_modules
 mysqlapp/node_modules
 sequelize/node_modules
 mvcapp/node_modules
+fileuploadsapp/node_modules
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Node.js</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <h1>Upload file</h1>
+    <!-- Здесь важно отметить, что, чтобы на стороне сервера multer мог подхватить загруженный файл, у формы атрибут enctype должен иметь значение multipart/form-data. -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <label>Файл</label><br />
+      <input type="file" name="filedata" /><br /><br />
+      <input type="submit" value="Send" />
+    </form>
+  </body>
+  <html></html>
+</html>
