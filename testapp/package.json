@@ -9,6 +9,8 @@
         "supertest": "^4.0.2"
     },
     "dependencies": {
-        "express": "^4.17.1"
+        "acorn": "^7.1.1",
+        "express": "^4.17.1",
+        "minimist": "^1.2.5"
     }
 }
