@@ -10,7 +10,7 @@
     },
     "dependencies": {
         "acorn": "^7.1.1",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "minimist": "^1.2.5"
     }
 }
